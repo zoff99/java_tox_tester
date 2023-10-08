@@ -57,6 +57,8 @@ public class MainActivity
     static String password_hash = "pass";
     static Semaphore semaphore_tox_savedata = new Semaphore(1);
     final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    static String to_add_toxid = null;
+    final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\nLet's meet later, what do you say?";
 
     static class Log
     {
@@ -111,6 +113,19 @@ public class MainActivity
 
         String my_tox_id_temp = get_my_toxid();
         Log.i(TAG, "MyToxID:" + my_tox_id_temp);
+
+        if (args.length > 0)
+        {
+            try
+            {
+                to_add_toxid = args[0];
+                Log.i(TAG, "will try to add friend: " + to_add_toxid);
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
     }
 
 
@@ -641,6 +656,19 @@ public class MainActivity
     static void android_tox_callback_self_connection_status_cb_method(int a_TOX_CONNECTION)
     {
 		Log.i(TAG, "self_connection_status:status:" + a_TOX_CONNECTION);
+        try
+        {
+            if (a_TOX_CONNECTION != 0)
+            {
+                if (to_add_toxid != null)
+                {
+                    tox_friend_add(to_add_toxid, "Tox Tester");
+                }
+            }
+        }
+        catch (Exception e)
+        {
+        }
     }
 
     static void android_tox_callback_friend_name_cb_method(long friend_number, String friend_name, long length)
@@ -662,6 +690,20 @@ public class MainActivity
     static void android_tox_callback_friend_connection_status_cb_method(long friend_number, int a_TOX_CONNECTION)
     {
 		Log.i(TAG, "friend_connection_status:friend:" + friend_number + " status:" + a_TOX_CONNECTION);
+        try
+        {
+            if (a_TOX_CONNECTION != 0)
+            {
+                if (to_add_toxid != null)
+                {
+                    tox_friend_send_message(friend_number, 0, send_this_message);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+        }
+
     }
 
     static void android_tox_callback_friend_typing_cb_method(long friend_number, final int typing)
