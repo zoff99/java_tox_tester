@@ -60,6 +60,8 @@ public class MainActivity
     static String to_add_toxid = null;
     static int friend_last_connection_status = 0;
     final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\nLet's meet later, what do you say?";
+    final static String BOT_MY_NAME = "Bob Bobovic";
+    final static String BOT_MY_STATUS_MSG = "I like dogs";
 
     static class Log
     {
@@ -126,6 +128,9 @@ public class MainActivity
             {
             }
         }
+
+        tox_self_set_name(BOT_MY_NAME);
+        tox_self_set_status_message(BOT_MY_STATUS_MSG);
 
     }
 
