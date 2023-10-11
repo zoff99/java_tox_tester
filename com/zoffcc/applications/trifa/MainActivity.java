@@ -58,6 +58,7 @@ public class MainActivity
     static Semaphore semaphore_tox_savedata = new Semaphore(1);
     final static char[] hexArray = "0123456789ABCDEF".toCharArray();
     static String to_add_toxid = null;
+    static int friend_last_connection_status = 0;
     final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\nLet's meet later, what do you say?";
 
     static class Log
@@ -692,7 +693,8 @@ public class MainActivity
 		Log.i(TAG, "friend_connection_status:friend:" + friend_number + " status:" + a_TOX_CONNECTION);
         try
         {
-            if (a_TOX_CONNECTION != 0)
+            // HINT: send the message only when then friend is coming online, not when changing from TCP to UDP or vice versa.
+            if ((a_TOX_CONNECTION != 0) && (friend_last_connection_status == 0))
             {
                 if (to_add_toxid != null)
                 {
@@ -703,7 +705,7 @@ public class MainActivity
         catch (Exception e)
         {
         }
-
+        friend_last_connection_status = a_TOX_CONNECTION;
     }
 
     static void android_tox_callback_friend_typing_cb_method(long friend_number, final int typing)
