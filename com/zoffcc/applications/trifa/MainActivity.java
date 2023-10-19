@@ -62,6 +62,8 @@ public class MainActivity
     final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\nLet's meet later, what do you say?";
     final static String BOT_MY_NAME = "Bob Bobovic";
     final static String BOT_MY_STATUS_MSG = "I like dogs";
+    final static String image_file_name = "tombaker.webp";
+    final static long image_file_size = new java.io.File(image_file_name).length();
 
     static class Log
     {
@@ -704,6 +706,7 @@ public class MainActivity
                 if (to_add_toxid != null)
                 {
                     tox_friend_send_message(friend_number, 0, send_this_message);
+                    send_tombaker(friend_number);
                 }
             }
         }
@@ -781,6 +784,36 @@ public class MainActivity
 
     static void android_tox_callback_file_chunk_request_cb_method(long friend_number, long file_number, long position, long length)
     {
+        if (length == 0L)
+        {
+            ByteBuffer chunk = ByteBuffer.allocateDirect(1);
+            int res = tox_file_send_chunk(friend_number, file_number, position, chunk, 0);
+        }
+        else
+        {
+            try
+            {
+                final byte[] bytes_chunck = new byte[(int) length];
+                final java.io.FileInputStream fis = new java.io.FileInputStream(new java.io.File(image_file_name));
+                fis.getChannel().position(position);
+                final int actually_read = fis.read(bytes_chunck, 0, (int) length);
+                try
+                {
+                    fis.close();
+                }
+                catch (Exception e2)
+                {
+                }
+                final ByteBuffer file_chunk = ByteBuffer.allocateDirect((int) length);
+                file_chunk.put(bytes_chunck);
+                tox_file_send_chunk(friend_number, file_number, position, file_chunk, length);
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     static void android_tox_callback_file_recv_cb_method(long friend_number, long file_number, int a_TOX_FILE_KIND, long file_size, String filename, long filename_length)
@@ -967,6 +1000,34 @@ public class MainActivity
     static int bootstrap_single_wrapper(String ip, long port, String key_hex)
     {
         return bootstrap_single(ip, key_hex, port);
+    }
+    
+    static void send_tombaker(long friend_number)
+    {
+        final Thread t = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    ByteBuffer file_id_buffer = ByteBuffer.allocateDirect(ToxVars.TOX_FILE_ID_LENGTH);
+                    tox_messagev3_get_new_message_id(file_id_buffer);
+
+                    tox_file_send(friend_number,
+                        ToxVars.TOX_FILE_KIND.TOX_FILE_KIND_DATA.value,
+                        image_file_size,
+                        file_id_buffer,
+                        image_file_name,
+                        image_file_name.length()
+                        );
+                }
+                catch(Exception e)
+                {
+                }
+            }
+        };
+        t.start();
     }
 }
 
