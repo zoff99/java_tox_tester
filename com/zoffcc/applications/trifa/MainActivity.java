@@ -59,7 +59,7 @@ public class MainActivity
     final static char[] hexArray = "0123456789ABCDEF".toCharArray();
     static String to_add_toxid = null;
     static int friend_last_connection_status = 0;
-    final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\nLet's meet later, what do you say?";
+    final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\n😁😆😅🤣😂🙂🙃😉😘\nLet's meet later, what do you say?";
     final static String BOT_MY_NAME = "Bob Bobovic";
     final static String BOT_MY_STATUS_MSG = "I like dogs";
     final static String image_file_name = "tombaker.webp";
