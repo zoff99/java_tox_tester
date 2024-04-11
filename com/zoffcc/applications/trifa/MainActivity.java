@@ -60,7 +60,7 @@ public class MainActivity
     static String to_add_toxid = null;
     static int friend_last_connection_status = 0;
     final static String send_this_message = "Hello!\nHow are you doing? Tox is a nice messaging tool.\n😁😆😅🤣😂🙂🙃😉😘\nLet's meet later, what do you say?";
-    final static String BOT_MY_NAME = "Bob Bobovic";
+    final static String BOT_MY_NAME = "Bob Bobovic 😎☂️";
     final static String BOT_MY_STATUS_MSG = "I like dogs";
     final static String image_file_name = "tombaker.webp";
     final static long image_file_size = new java.io.File(image_file_name).length();
