@@ -87,26 +87,50 @@ public class TrifaToxService
                 global_my_toxid = my_tox_id_local;
                 if (tox_self_get_name_size() > 0)
                 {
-                    global_my_name = tox_self_get_name().substring(0, (int) tox_self_get_name_size());
-                    Log.i(TAG, "AAA:003:" + global_my_name + " size=" + tox_self_get_name_size());
+                    try
+                    {
+                        global_my_name = tox_self_get_name().substring(0, (int) tox_self_get_name_size());
+                        Log.i(TAG, "AAA:003:" + global_my_name + " size=" + tox_self_get_name_size());
+                    }
+                    catch(Exception e)
+                    {
+                    }
                 }
                 else
                 {
-                    tox_self_set_name("TRIfA " + my_tox_id_local.substring(my_tox_id_local.length() - 5, my_tox_id_local.length()));
-                    global_my_name = ("TRIfA " + my_tox_id_local.substring(my_tox_id_local.length() - 5, my_tox_id_local.length()));
-                    Log.i(TAG, "AAA:005");
+                    try
+                    {
+                        tox_self_set_name("TRIfA " + my_tox_id_local.substring(my_tox_id_local.length() - 5, my_tox_id_local.length()));
+                        global_my_name = ("TRIfA " + my_tox_id_local.substring(my_tox_id_local.length() - 5, my_tox_id_local.length()));
+                        Log.i(TAG, "AAA:005");
+                    }
+                    catch(Exception e)
+                    {
+                    }
                 }
 
                 if (tox_self_get_status_message_size() > 0)
                 {
-                    global_my_status_message = tox_self_get_status_message().substring(0, (int) tox_self_get_status_message_size());
-                    Log.i(TAG, "AAA:008:" + global_my_status_message + " size=" + tox_self_get_status_message_size());
+                    try
+                    {
+                        global_my_status_message = tox_self_get_status_message().substring(0, (int) tox_self_get_status_message_size());
+                        Log.i(TAG, "AAA:008:" + global_my_status_message + " size=" + tox_self_get_status_message_size());
+                    }
+                    catch(Exception e)
+                    {
+                    }
                 }
                 else
                 {
-                    tox_self_set_status_message("this is TRIfA");
-                    global_my_status_message = "this is TRIfA";
-                    Log.i(TAG, "AAA:010");
+                    try
+                    {
+                        tox_self_set_status_message("this is TRIfA");
+                        global_my_status_message = "this is TRIfA";
+                        Log.i(TAG, "AAA:010");
+                    }
+                    catch(Exception e)
+                    {
+                    }
                 }
                 Log.i(TAG, "AAA:011");
 
