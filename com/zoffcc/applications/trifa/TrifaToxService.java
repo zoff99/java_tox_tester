@@ -157,16 +157,19 @@ public class TrifaToxService
                     Log.i(TAG, "bootrapping:set to true");
 
                     // ----- UDP ------
-                    Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("tox.verdict.gg", 33445, "1C5293AEF2114717547B39DA8EA6F1E331E5E358B35F9B6B5F19317911C5F976"));
-                    Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("tox.initramfs.io", 33445, "3F0A45A268367C1BEA652F258C85F4A66DA76BCAA667A49E770BCC4917AB6A25"));
-                    Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("205.185.115.131", 53, "3091C6BEB2A993F1C6300C16549FABA67098FF3D62C6D253828B531470B53D68"));
+                    // Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("tox.verdict.gg", 33445, "1C5293AEF2114717547B39DA8EA6F1E331E5E358B35F9B6B5F19317911C5F976"));
+                    // Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("tox.initramfs.io", 33445, "3F0A45A268367C1BEA652F258C85F4A66DA76BCAA667A49E770BCC4917AB6A25"));
+                    // Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("205.185.115.131", 53, "3091C6BEB2A993F1C6300C16549FABA67098FF3D62C6D253828B531470B53D68"));
                     Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("2a03:b0c0:3:d0::ac:5001", 33445, "CD133B521159541FB1D326DE9850F5E56A6C724B5B8E5EB5CD8D950408E95707"));
+                    Log.i(TAG, "bootstrap_single:res=" + MainActivity.bootstrap_single_wrapper("2600:3c03::f03c:93ff:fe7f:6096", 33445, "DA2BD927E01CD05EBCC2574EBE5BEBB10FF59AE0B2105A7D1E2B40E49BB20239"));
                     // ----- UDP ------
                     //
                     // ----- TCP ------
-                    Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("tox.verdict.gg", 33445, "1C5293AEF2114717547B39DA8EA6F1E331E5E358B35F9B6B5F19317911C5F976"));
-                    Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("tox.initramfs.io", 33445, "3F0A45A268367C1BEA652F258C85F4A66DA76BCAA667A49E770BCC4917AB6A25"));
-                    Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("205.185.115.131", 443, "3091C6BEB2A993F1C6300C16549FABA67098FF3D62C6D253828B531470B53D68"));
+                    // Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("tox.verdict.gg", 33445, "1C5293AEF2114717547B39DA8EA6F1E331E5E358B35F9B6B5F19317911C5F976"));
+                    // Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("tox.initramfs.io", 33445, "3F0A45A268367C1BEA652F258C85F4A66DA76BCAA667A49E770BCC4917AB6A25"));
+                    // Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("205.185.115.131", 443, "3091C6BEB2A993F1C6300C16549FABA67098FF3D62C6D253828B531470B53D68"));
+                    Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("2a03:b0c0:3:d0::ac:5001", 33445, "CD133B521159541FB1D326DE9850F5E56A6C724B5B8E5EB5CD8D950408E95707"));
+                    Log.i(TAG, "add_tcp_relay_single:res=" + MainActivity.add_tcp_relay_single_wrapper("2600:3c03::f03c:93ff:fe7f:6096", 443, "DA2BD927E01CD05EBCC2574EBE5BEBB10FF59AE0B2105A7D1E2B40E49BB20239"));
                     // ----- TCP ------
                 }
 
