@@ -64,6 +64,7 @@ public class MainActivity
     final static String BOT_MY_STATUS_MSG = "I like dogs";
     final static String image_file_name = "tombaker.webp";
     final static long image_file_size = new java.io.File(image_file_name).length();
+    static boolean send_done = false;
 
     static class Log
     {
@@ -698,8 +699,11 @@ public class MainActivity
     static void android_tox_callback_friend_connection_status_cb_method(long friend_number, int a_TOX_CONNECTION)
     {
 		Log.i(TAG, "friend_connection_status:friend:" + friend_number + " status:" + a_TOX_CONNECTION);
+        // HINT: send only the first time. in case connection is flakey.
+        if (send_done) { return; }
         try
         {
+            send_done = true;
             // HINT: send the message only when then friend is coming online, not when changing from TCP to UDP or vice versa.
             if ((a_TOX_CONNECTION != 0) && (friend_last_connection_status == 0))
             {
@@ -784,6 +788,8 @@ public class MainActivity
 
     static void android_tox_callback_file_chunk_request_cb_method(long friend_number, long file_number, long position, long length)
     {
+        Log.i(TAG, "android_tox_callback_file_chunk_request_cb_method: fn=" + friend_number + " filenum="
+                + file_number + " pos=" + position + " len=" + length);
         if (length == 0L)
         {
             ByteBuffer chunk = ByteBuffer.allocateDirect(1);
@@ -797,6 +803,7 @@ public class MainActivity
                 final java.io.FileInputStream fis = new java.io.FileInputStream(new java.io.File(image_file_name));
                 fis.getChannel().position(position);
                 final int actually_read = fis.read(bytes_chunck, 0, (int) length);
+                Log.i(TAG, "android_tox_callback_file_chunk_request_cb_method: actually_read=" + actually_read);
                 try
                 {
                     fis.close();
@@ -1011,9 +1018,12 @@ public class MainActivity
             {
                 try
                 {
+                    // HINT: wait a bit after friend comes online, before starting to send a file
+                    Thread.sleep(1);
                     ByteBuffer file_id_buffer = ByteBuffer.allocateDirect(ToxVars.TOX_FILE_ID_LENGTH);
                     tox_messagev3_get_new_message_id(file_id_buffer);
 
+                    Log.i(TAG, "start to send file");
                     tox_file_send(friend_number,
                         ToxVars.TOX_FILE_KIND.TOX_FILE_KIND_DATA.value,
                         image_file_size,
