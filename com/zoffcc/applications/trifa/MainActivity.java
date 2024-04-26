@@ -142,9 +142,36 @@ public class MainActivity
     {
         try
         {
-            System.loadLibrary("jni-c-toxcore");
-            native_lib_loaded = true;
-            Log.i(TAG, "successfully loaded native library");
+            if (OperatingSystem.getCurrent() == OperatingSystem.LINUX)
+            {
+                System.loadLibrary("jni-c-toxcore");
+                native_lib_loaded = true;
+                Log.i(TAG, "successfully loaded native library");
+            } else if (OperatingSystem.getCurrent() == OperatingSystem.RASPI)
+            {
+                native_lib_loaded = false;
+                Log.i(TAG, "loadLibrary jni-c-toxcore failed!");
+            } else if (OperatingSystem.getCurrent() == OperatingSystem.WINDOWS)
+            {
+                System.loadLibrary("jni-c-toxcore");
+                native_lib_loaded = true;
+                Log.i(TAG, "successfully loaded native library");
+            } else if (OperatingSystem.getCurrent() == OperatingSystem.MACOS)
+            {
+                System.loadLibrary("jni-c-toxcore");
+                native_lib_loaded = true;
+                Log.i(TAG, "successfully loaded native library");
+            } else if (OperatingSystem.getCurrent() == OperatingSystem.MACARM)
+            {
+                System.loadLibrary("jni-c-toxcore_macosarm64");
+                native_lib_loaded = true;
+                Log.i(TAG, "successfully loaded native library");
+            } else
+            {
+                Log.i(TAG,"OS:Unknown operating system: " + OperatingSystem.getCurrent());
+                native_lib_loaded = false;
+                Log.i(TAG, "loadLibrary jni-c-toxcore failed!");
+            }
         }
         catch (java.lang.UnsatisfiedLinkError e)
         {
