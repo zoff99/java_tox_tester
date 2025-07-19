@@ -666,7 +666,7 @@ public class MainActivity
                     {
                         try
                         {
-                            Thread.sleep(500);
+                            Thread.sleep(150);
 
                             yuv_frame_raw_data = new byte[buffer_size_in_bytes2];
                             rnd.nextBytes(yuv_frame_raw_data);
