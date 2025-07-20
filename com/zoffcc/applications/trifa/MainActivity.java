@@ -29,6 +29,8 @@ package com.zoffcc.applications.trifa;
 
 
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.Semaphore;
 import java.util.Random;
 
@@ -39,7 +41,7 @@ import static com.zoffcc.applications.trifa.ToxVars.TOX_PUBLIC_KEY_SIZE;
 public class MainActivity
 {
     private static final String TAG = "trifa.MainActivity";
-    private static final String Version = "1.0.1";
+    private static final String Version = "1.0.2";
     // --------- global config ---------
     // --------- global config ---------
     // --------- global config ---------
@@ -64,6 +66,7 @@ public class MainActivity
     final static String BOT_MY_NAME = "Bob Bobovic 😎☂️";
     final static String BOT_MY_STATUS_MSG = "I like dogs";
     final static String image_file_name = "tombaker.webp";
+    final static String yuv_frame_file_name = "videotest-640x480.yuv";
     final static long image_file_size = new java.io.File(image_file_name).length();
     static ByteBuffer video_buffer_2 = null;
     static boolean send_done = false;
@@ -662,15 +665,15 @@ public class MainActivity
                     byte[] yuv_frame_raw_data;
                     Random rnd = new Random();
 
+                    yuv_frame_raw_data = Files.readAllBytes(Paths.get(yuv_frame_file_name));
+
                     while (2 == 1 + 1)
                     {
                         try
                         {
                             Thread.sleep(150);
-
-                            yuv_frame_raw_data = new byte[buffer_size_in_bytes2];
-                            rnd.nextBytes(yuv_frame_raw_data);
-
+                            // yuv_frame_raw_data = new byte[buffer_size_in_bytes2];
+                            // rnd.nextBytes(yuv_frame_raw_data);
                             MainActivity.video_buffer_2.rewind();
                             MainActivity.video_buffer_2.put(yuv_frame_raw_data);
                             toxav_video_send_frame(friend_number, video_w, video_h);
