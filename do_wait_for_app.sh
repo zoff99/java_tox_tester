@@ -5,6 +5,7 @@ adb=adb
 
 x=0
 while [ "$x""x" == "0x" ]; do
+   "$adb" shell "ls -al /storage/emulated/0/Android/data/com.zoffcc.applications.trifa/files/"
    "$adb" pull "$toxid_file"
    if [ -s 001.txt ]; then
       echo "ID found"
