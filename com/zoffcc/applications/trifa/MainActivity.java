@@ -28,6 +28,12 @@ package com.zoffcc.applications.trifa;
 //  ==================================================
 
 
+//
+//
+// create the YUV frame file with this command (the input png file MUST! be exactly 640x480 in size)
+// convert input_video_frame.png -colorspace YUV videotest-640x480.yuv
+//
+
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
