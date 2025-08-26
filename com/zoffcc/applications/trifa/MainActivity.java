@@ -28,8 +28,17 @@ package com.zoffcc.applications.trifa;
 //  ==================================================
 
 
+//
+//
+// create the YUV frame file with this command (the input png file MUST! be exactly 640x480 in size)
+// convert input_video_frame.png -colorspace YUV videotest-640x480.yuv
+//
+
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.Semaphore;
+import java.util.Random;
 
 import static com.zoffcc.applications.trifa.TRIFAGlobals.bootstrapping;
 import static com.zoffcc.applications.trifa.ToxVars.TOX_HASH_LENGTH;
@@ -38,7 +47,7 @@ import static com.zoffcc.applications.trifa.ToxVars.TOX_PUBLIC_KEY_SIZE;
 public class MainActivity
 {
     private static final String TAG = "trifa.MainActivity";
-    private static final String Version = "1.0.1";
+    private static final String Version = "1.0.2";
     // --------- global config ---------
     // --------- global config ---------
     // --------- global config ---------
@@ -63,7 +72,9 @@ public class MainActivity
     final static String BOT_MY_NAME = "Bob Bobovic 😎☂️";
     final static String BOT_MY_STATUS_MSG = "I like dogs";
     final static String image_file_name = "tombaker.webp";
+    final static String yuv_frame_file_name = "videotest-640x480.yuv";
     final static long image_file_size = new java.io.File(image_file_name).length();
+    static ByteBuffer video_buffer_2 = null;
     static boolean send_done = false;
 
     static class Log
@@ -639,6 +650,51 @@ public class MainActivity
 
     static void android_toxav_callback_call_cb_method(long friend_number, int audio_enabled, int video_enabled)
     {
+        Log.i(TAG, "android_toxav_callback_call_cb_method: " + friend_number + " " + audio_enabled + " " + video_enabled);
+        toxav_answer(friend_number, TRIFAGlobals.LOWER_GLOBAL_AUDIO_BITRATE, TRIFAGlobals.LOWER_GLOBAL_VIDEO_BITRATE);
+        // TODO: stop the thread, now we just keep it running and send a video still frame forever
+        final Thread t = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    int video_w = 640;
+                    int video_h = 480;
+                    int y_layer_size = video_w * video_h;
+                    int u_layer_size = y_layer_size / 4;
+                    int v_layer_size = y_layer_size / 4;
+                    int buffer_size_in_bytes2 = y_layer_size + v_layer_size + u_layer_size;
+                    MainActivity.video_buffer_2 = ByteBuffer.allocateDirect((2 * buffer_size_in_bytes2) + 1);
+                    MainActivity.set_JNI_video_buffer2(MainActivity.video_buffer_2, video_w, video_h);
+                    byte[] yuv_frame_raw_data;
+                    Random rnd = new Random();
+
+                    yuv_frame_raw_data = Files.readAllBytes(Paths.get(yuv_frame_file_name));
+
+                    while (2 == 1 + 1)
+                    {
+                        try
+                        {
+                            Thread.sleep(150);
+                            // yuv_frame_raw_data = new byte[buffer_size_in_bytes2];
+                            // rnd.nextBytes(yuv_frame_raw_data);
+                            MainActivity.video_buffer_2.rewind();
+                            MainActivity.video_buffer_2.put(yuv_frame_raw_data);
+                            toxav_video_send_frame(friend_number, video_w, video_h);
+                        }
+                        catch(Exception e)
+                        {
+                        }
+                    }
+                }
+                catch(Exception e2)
+                {
+                }
+            }
+        };
+        t.start();
     }
 
     static void android_toxav_callback_video_receive_frame_cb_method(long friend_number, long frame_width_px, long frame_height_px, long ystride, long ustride, long vstride)
